@@ -3,8 +3,6 @@ name: .NET
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -26,7 +24,7 @@ jobs:
       run: dotnet pack --configuration Release --no-restore
 
     - name: Publish Nuget package
-      uses: myci-actions/publish-nuget@latest
+      uses: myci-actions/publish-nuget@5
       with:
         filename: "/bin/Release/FFXIVVenues.VenueModels.*.nupkg"
         api-key: "${{ secrets.NUGET_PAT }}"

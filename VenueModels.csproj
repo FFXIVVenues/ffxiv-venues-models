@@ -12,12 +12,15 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
+    <PackageTags>ffxiv; venues</PackageTags>
+    <Description>Data models for FFXIV Venues (includes 2021 and 2022 models). </Description>
+    <PackageReleaseNotes>Updated type of 2021 Venue description field to string array. </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-	  <None Include="logo.png" Pack="true" PackagePath=""/>
-	  <None Include="LICENSE" Pack="true" PackagePath=""/>
+	  <None Include="logo.png" Pack="true" PackagePath="" />
+	  <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

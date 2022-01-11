@@ -5,7 +5,7 @@
     {
         public string id { get; set; }
         public string name { get; set; }
-        public object description { get; set; }
+        public string[] description { get; set; }
         public string location { get; set; }
         public string discord { get; set; }
         public bool sfw { get; set; }

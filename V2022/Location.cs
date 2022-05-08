@@ -8,6 +8,7 @@
         public ushort Ward { get; set; }
         public ushort Plot { get; set; }
         public ushort Apartment { get; set; }
+        public ushort Room { get; set; }
         public bool Subdivision { get; set; }
         public string Shard { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace VenueModels.V2022
 {
@@ -22,6 +23,62 @@ namespace VenueModels.V2022
         public Venue() =>
             Id = GenerateId();
 
+        public Venue(V2021.Venue v1Venue)
+        {
+            this.Id = v1Venue.id;
+            this.Description = v1Venue.description?.ToList();
+            this.Discord = string.IsNullOrWhiteSpace(v1Venue.discord) ? null : new Uri(v1Venue.discord);
+            this.Name = v1Venue.name;
+            this.Nsfw = v1Venue.nsfw;
+            this.Sfw = v1Venue.sfw;
+            this.Website = string.IsNullOrWhiteSpace(v1Venue.website) ? null : new Uri(v1Venue.website);
+            this.Tags = v1Venue.tags.ToList();
+            this.Contacts = v1Venue.contacts.ToList();
+            this.Notices = v1Venue.notices?.Select(v => new Notice {
+                Start = DateTime.UtcNow,
+                Message = v,
+                End = DateTime.UtcNow.AddYears(2),
+                Type = V2022.NoticeType.Information
+            }).ToList();
+            this.Exceptions = v1Venue.exceptions?.Select(e => new OpeningException
+            {
+                Start = DateTime.Parse(e.start),
+                End = DateTime.Parse(e.end)
+            }).ToList();
+
+            // Location
+            var location = v1Venue.location.Split(",");
+            var newLocation = new Location();
+            newLocation.World = location[0];
+            newLocation.DataCenter = "Aether";
+            newLocation.District = location[1].Trim();
+            newLocation.Ward = PullNumber(location[2]);
+            if (location[3].Trim().Contains("Apartment"))
+                newLocation.Apartment = PullNumber(location[3]);
+            else
+                newLocation.Plot = PullNumber(location[3]);
+            if (newLocation.Plot > 30 || location[3].Trim().StartsWith("Sub"))
+                newLocation.Subdivision = true;
+
+            this.Location = newLocation;
+
+            // Openings
+            this.Openings = v1Venue.times?.Select(v => new Opening
+            {
+                Day = (Day)v.day,
+                Location = null,
+                Start = new Time
+                {
+                    Hour = (ushort)(v.start.hour - 5 < 0 ? (24 + v.start.hour - 5) : (v.start.hour - 5)),
+                    Minute = (ushort)v.start.minute,
+                    NextDay = v.start.nextDay,
+                    TimeZone = "Eastern Standard Time"
+                }
+            }).ToList() ?? new List<Opening>();
+        }
+
+        static Venue FromV1Venue(V2021.Venue v1Venue) => new Venue(v1Venue);
+        
         public string GenerateId()
         {
             var chars = "BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz0123456789";
@@ -110,5 +167,11 @@ namespace VenueModels.V2022
 
             return summary.ToString();
         }
+
+        private static ushort PullNumber(string input)
+        {
+            return ushort.Parse(new Regex("\\d?\\d").Match(input).Value);
+        }
+
     }
 }

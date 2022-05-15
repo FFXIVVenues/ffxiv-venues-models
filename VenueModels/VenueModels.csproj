@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/FFXIVVenues/ffxiv-venues-models</RepositoryUrl>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <Version>5.0.3</Version>
+    <Version>5.0.4</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues (includes 2021 and 2022 models). </Description>
     <PackageReleaseNotes>New root namespace, support for Tags, Contacts and conversation between Model versions</PackageReleaseNotes>

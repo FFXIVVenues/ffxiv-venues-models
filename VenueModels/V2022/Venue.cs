@@ -72,11 +72,18 @@ namespace FFXIVVenues.VenueModels.V2022
                 Location = null,
                 Start = new Time
                 {
-                    Hour = (ushort)(v.start.hour - 5 < 0 ? (24 + v.start.hour - 5) : (v.start.hour - 5)),
+                    Hour = (ushort)(v.start.hour - 4 < 0 ? (24 + v.start.hour - 4) : (v.start.hour - 4)),
                     Minute = (ushort)v.start.minute,
-                    NextDay = v.start.nextDay,
+                    NextDay = v.start.nextDay & v.start.hour - 4 >= 0,
                     TimeZone = "Eastern Standard Time"
-                }
+                },
+                End = v.end != null ? 
+                    new Time {
+                        Hour = (ushort)(v.end.hour - 4 < 0 ? (24 + v.end.hour - 4) : (v.end.hour - 4)),
+                        Minute = (ushort)v.end.minute,
+                        NextDay = v.end.nextDay & v.end.hour - 4 >= 0,
+                        TimeZone = "Eastern Standard Time"
+                    } : null
             }).ToList() ?? new List<Opening>();
         }
 

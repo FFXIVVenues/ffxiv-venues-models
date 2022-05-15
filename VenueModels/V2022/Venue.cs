@@ -59,7 +59,7 @@ namespace FFXIVVenues.VenueModels.V2022
                     newLocation.Apartment = PullNumber(location[3]);
                 else
                     newLocation.Plot = PullNumber(location[3]);
-                if (newLocation.Plot > 30 || location[3].Trim().StartsWith("Sub"))
+                if (newLocation.Plot > 30 || location[2].Trim().EndsWith("Sub"))
                     newLocation.Subdivision = true;
 
                 this.Location = newLocation;

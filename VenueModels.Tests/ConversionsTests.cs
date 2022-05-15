@@ -1,0 +1,20 @@
+using NUnit.Framework;
+
+namespace FFXIVVenues.VenueModels.Tests
+{
+    public class ConversationTests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        public void CanHandleAllFieldsNull()
+        {
+            var v1model = new V2021.Venue();
+            var v2model = V2022.Venue.FromV1Venue(v1model);
+            Assert.AreEqual(v1model.name, v2model.Name);
+        }
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace VenueModels.V2022
+namespace FFXIVVenues.VenueModels.V2022
 {
     public class Venue
     {
@@ -32,8 +32,8 @@ namespace VenueModels.V2022
             this.Nsfw = v1Venue.nsfw;
             this.Sfw = v1Venue.sfw;
             this.Website = string.IsNullOrWhiteSpace(v1Venue.website) ? null : new Uri(v1Venue.website);
-            this.Tags = v1Venue.tags.ToList();
-            this.Contacts = v1Venue.contacts.ToList();
+            this.Tags = v1Venue.tags?.ToList();
+            this.Contacts = v1Venue.contacts?.ToList();
             this.Notices = v1Venue.notices?.Select(v => new Notice {
                 Start = DateTime.UtcNow,
                 Message = v,
@@ -47,20 +47,23 @@ namespace VenueModels.V2022
             }).ToList();
 
             // Location
-            var location = v1Venue.location.Split(",");
-            var newLocation = new Location();
-            newLocation.World = location[0];
-            newLocation.DataCenter = "Aether";
-            newLocation.District = location[1].Trim();
-            newLocation.Ward = PullNumber(location[2]);
-            if (location[3].Trim().Contains("Apartment"))
-                newLocation.Apartment = PullNumber(location[3]);
-            else
-                newLocation.Plot = PullNumber(location[3]);
-            if (newLocation.Plot > 30 || location[3].Trim().StartsWith("Sub"))
-                newLocation.Subdivision = true;
+            if (v1Venue.location != null)
+            {
+                var location = v1Venue.location.Split(",");
+                var newLocation = new Location();
+                newLocation.World = location[0];
+                newLocation.DataCenter = "Aether";
+                newLocation.District = location[1].Trim();
+                newLocation.Ward = PullNumber(location[2]);
+                if (location[3].Trim().Contains("Apartment"))
+                    newLocation.Apartment = PullNumber(location[3]);
+                else
+                    newLocation.Plot = PullNumber(location[3]);
+                if (newLocation.Plot > 30 || location[3].Trim().StartsWith("Sub"))
+                    newLocation.Subdivision = true;
 
-            this.Location = newLocation;
+                this.Location = newLocation;
+            }
 
             // Openings
             this.Openings = v1Venue.times?.Select(v => new Opening

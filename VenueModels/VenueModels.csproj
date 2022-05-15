@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PackageId>FFXIVVenues.$(AssemblyName)</PackageId>
+    <Authors>Kana Ki @ Gilgamesh</Authors>
+    <Product>FFXIV Venues</Product>
+    <PackageIcon>logo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/FFXIVVenues/ffxiv-venues-models</RepositoryUrl>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <Version>5.0.0</Version>
+    <PackageTags>ffxiv; venues</PackageTags>
+    <Description>Data models for FFXIV Venues (includes 2021 and 2022 models). </Description>
+    <PackageReleaseNotes>New root namespace, support for Tags, Contacts and conversation between Model versions</PackageReleaseNotes>
+    <DebugType>embedded</DebugType>
+    <RootNamespace>FFXIVVenues.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>FFXIVVenues.$(MSBuildProjectName)</AssemblyName>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+    <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VenueModels.V2022
+namespace FFXIVVenues.VenueModels.V2022
 {
     public class OpeningException
     {

@@ -1,4 +1,4 @@
-﻿namespace VenueModels.V2021
+﻿namespace FFXIVVenues.VenueModels.V2021
 {
     public class Time
     {

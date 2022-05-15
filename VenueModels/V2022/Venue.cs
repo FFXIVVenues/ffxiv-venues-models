@@ -55,7 +55,7 @@ namespace FFXIVVenues.VenueModels.V2022
                 newLocation.DataCenter = "Aether";
                 newLocation.District = location[1].Trim();
                 newLocation.Ward = PullNumber(location[2]);
-                if (location[3].Trim().Contains("Apartment"))
+                if (location[3].Trim().Contains("Apt"))
                     newLocation.Apartment = PullNumber(location[3]);
                 else
                     newLocation.Plot = PullNumber(location[3]);

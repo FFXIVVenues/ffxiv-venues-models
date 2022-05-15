@@ -77,7 +77,7 @@ namespace VenueModels.V2022
             }).ToList() ?? new List<Opening>();
         }
 
-        static Venue FromV1Venue(V2021.Venue v1Venue) => new Venue(v1Venue);
+        public static Venue FromV1Venue(V2021.Venue v1Venue) => new Venue(v1Venue);
         
         public string GenerateId()
         {

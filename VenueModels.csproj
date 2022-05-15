@@ -12,7 +12,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <Version>4.2.0</Version>
+    <Version>4.2.1</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues (includes 2021 and 2022 models). </Description>
     <PackageReleaseNotes>Update Opening to use Location model for location property rather than string</PackageReleaseNotes>

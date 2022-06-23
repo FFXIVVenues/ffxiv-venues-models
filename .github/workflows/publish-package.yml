@@ -27,4 +27,4 @@ jobs:
       run: dotnet nuget add source --username kana-ki --password ${{ secrets.NUGET_PAT }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/FFXIVVenues/index.json"
     
     - name: Push package
-      run: dotnet nuget push "VenueModels/bin/Release/FFXIVVenues.VenueModels.*.nupkg" --api-key ${{ secrets.NUGET_PAT }} --source "github" --skip-duplicate
+      run: dotnet nuget push "FFXIVVenues.VenueModels/bin/Release/FFXIVVenues.VenueModels.*.nupkg" --api-key ${{ secrets.NUGET_PAT }} --source "github" --skip-duplicate

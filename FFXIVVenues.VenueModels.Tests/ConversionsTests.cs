@@ -4,11 +4,6 @@ namespace FFXIVVenues.VenueModels.Tests
 {
     public class ConversationTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void CanHandleAllFieldsNull()
         {

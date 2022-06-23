@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VenueModels.Tests", "VenueModels.Tests\VenueModels.Tests.csproj", "{0C153473-37D3-4510-BBFF-CA456395C4AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFXIVVenues.VenueModels.Tests", "FFXIVVenues.VenueModels.Tests\FFXIVVenues.VenueModels.Tests.csproj", "{0C153473-37D3-4510-BBFF-CA456395C4AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VenueModels", "VenueModels\VenueModels.csproj", "{419F7977-9544-42CB-A450-6575D2802100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFXIVVenues.VenueModels", "FFXIVVenues.VenueModels\FFXIVVenues.VenueModels.csproj", "{419F7977-9544-42CB-A450-6575D2802100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

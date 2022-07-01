@@ -11,5 +11,6 @@ namespace FFXIVVenues.VenueModels.Tests
             var v2model = V2022.Venue.FromV1Venue(v1model);
             Assert.AreEqual(v1model.name, v2model.Name);
         }
+
     }
 }

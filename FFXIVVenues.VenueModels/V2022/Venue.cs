@@ -117,7 +117,7 @@ namespace FFXIVVenues.VenueModels.V2022
                 return null;
 
             foreach (var opening in Openings)
-                if (opening.IsNow())
+                if (opening.IsNow)
                     return opening;
 
             return null;
@@ -127,7 +127,7 @@ namespace FFXIVVenues.VenueModels.V2022
         {
             if (this.OpenOverrides != null)
             {
-                var @override = this.OpenOverrides.FirstOrDefault(o => o.IsNow());
+                var @override = this.OpenOverrides.FirstOrDefault(o => o.IsNow);
                 if (@override != null) return @override.Open;
             }
 

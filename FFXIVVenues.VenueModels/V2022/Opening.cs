@@ -8,8 +8,9 @@ namespace FFXIVVenues.VenueModels.V2022
         public Time Start { get; set; }
         public Time End { get; set; }
         public Location Location { get; set; }
+        public bool IsNow => this.IsNowInternal();
 
-        public bool IsNow()
+        private bool IsNowInternal()
         {
             var currentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0, DateTimeKind.Utc);
             var dayNumber = (int)currentDate.DayOfWeek - 1; // Monday is first day of the week for FFXIV Venues

@@ -7,8 +7,9 @@ namespace FFXIVVenues.VenueModels.V2022
         public bool Open { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public bool IsNow => this.IsNowInternal();
 
-        public bool IsNow()
+        private bool IsNowInternal()
         {
             return DateTime.UtcNow > Start && DateTime.UtcNow < End;
         }

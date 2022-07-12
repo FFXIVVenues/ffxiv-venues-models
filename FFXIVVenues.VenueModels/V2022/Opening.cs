@@ -8,9 +8,9 @@ namespace FFXIVVenues.VenueModels.V2022
         public Time Start { get; set; }
         public Time End { get; set; }
         public Location Location { get; set; }
-        public bool IsNow => this.IsNowInternal();
+        public bool IsNow => this.IsAt(DateTime.UtcNow);
 
-        private bool IsNowInternal()
+        public bool IsAt(DateTime at)
         {
             var currentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0, DateTimeKind.Utc);
             var dayNumber = (int)currentDate.DayOfWeek - 1; // Monday is first day of the week for FFXIV Venues
@@ -30,10 +30,10 @@ namespace FFXIVVenues.VenueModels.V2022
                 end = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
                         new DateTime(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.End.Hour, this.End.Minute, 0, DateTimeKind.Unspecified),
                         endTimeZone.Id, TimeZoneInfo.Utc.Id)
-                    .AddDays((int)this.Day + (this.Start.NextDay ? 1 : 0));
+                    .AddDays((int)this.Day + (this.End.NextDay ? 1 : 0));
             }
 
-            return (DateTime.UtcNow > start && DateTime.UtcNow < end);
+            return (at >= start && at < end);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace FFXIVVenues.VenueModels.V2021
+﻿using System;
+
+namespace FFXIVVenues.VenueModels.V2021
 {
 
     public class Venue

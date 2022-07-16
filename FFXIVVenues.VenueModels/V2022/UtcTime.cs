@@ -1,4 +1,6 @@
-﻿namespace FFXIVVenues.VenueModels.V2022
+﻿using System;
+
+namespace FFXIVVenues.VenueModels.V2022
 {
     public class UtcTime
     {

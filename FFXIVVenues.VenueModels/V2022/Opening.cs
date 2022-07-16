@@ -1,4 +1,5 @@
-﻿using TimeZoneConverter;
+﻿using System;
+using TimeZoneConverter;
 
 namespace FFXIVVenues.VenueModels.V2022
 {

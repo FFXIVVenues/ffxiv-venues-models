@@ -13,7 +13,7 @@ namespace FFXIVVenues.VenueModels.V2022
 
         public bool IsAt(DateTime at)
         {
-            var currentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0, DateTimeKind.Utc);
+            var currentDate = new DateTime(at.Year, at.Month, at.Day, 0, 0, 0, at.Kind);
             var dayNumber = (int)currentDate.DayOfWeek - 1; // Monday is first day of the week for FFXIV Venues
             if (dayNumber == -1) dayNumber = 6;
             var weekBeginning = currentDate.AddDays(-dayNumber);
@@ -32,6 +32,14 @@ namespace FFXIVVenues.VenueModels.V2022
                         new DateTime(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.End.Hour, this.End.Minute, 0, DateTimeKind.Unspecified),
                         endTimeZone.Id, TimeZoneInfo.Utc.Id)
                     .AddDays((int)this.Day + (this.End.NextDay ? 1 : 0));
+            }
+            if (end < start)
+                end = end.AddDays(7);
+
+            if (this.Day == Day.Sunday && at < start)
+            {
+                start = start.AddDays(-7);
+                end = end.AddDays(-7);
             }
 
             return (at >= start && at < end);

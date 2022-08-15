@@ -13,10 +13,10 @@
     <RepositoryUrl>https://github.com/FFXIVVenues/ffxiv-venues-models</RepositoryUrl>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <Version>6.6.0</Version>
+    <Version>6.7.0</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues (includes 2021 and 2022 models).</Description>
-    <PackageReleaseNotes>Fix issue wherein openings over the week boundary would not be recognised as current.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add ability to pull resolved DateTimes from an opening</PackageReleaseNotes>
     <DebugType>embedded</DebugType>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>

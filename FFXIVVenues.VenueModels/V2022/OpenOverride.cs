@@ -11,7 +11,7 @@ namespace FFXIVVenues.VenueModels.V2022
 
         private bool IsNowInternal()
         {
-            return DateTime.UtcNow > Start && DateTime.UtcNow < End;
+            return DateTime.UtcNow > Start.ToUniversalTime() && DateTime.UtcNow < End.ToUniversalTime();
         }
     }
 

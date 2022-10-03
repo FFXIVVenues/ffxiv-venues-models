@@ -13,10 +13,10 @@
     <RepositoryUrl>https://github.com/FFXIVVenues/ffxiv-venues-models</RepositoryUrl>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <Version>7.0.0</Version>
+    <Version>8.0.0</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues (includes 2021 and 2022 models).</Description>
-    <PackageReleaseNotes>Fix issue wherein OpenOverride would be compared against UTC without ensuring the override was in UTC</PackageReleaseNotes>
+    <PackageReleaseNotes>Remove 2021 model, add MareCode and Approved venue fields</PackageReleaseNotes>
     <DebugType>embedded</DebugType>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>

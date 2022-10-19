@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace FFXIVVenues.VenueModels.V2022
+namespace FFXIVVenues.VenueModels
 {
     public class Venue
     {
@@ -23,6 +23,7 @@ namespace FFXIVVenues.VenueModels.V2022
         public List<string> Tags { get; set; } = new();
         public bool Approved { get; set; }
         public string MareCode { get; set; }
+        public string MarePassword { get; set; }
         public bool Open => this.IsOpen();
 
 

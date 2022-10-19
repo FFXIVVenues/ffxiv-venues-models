@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
-namespace FFXIVVenues.VenueModels.V2022
+namespace FFXIVVenues.VenueModels
 {
     public class Location
     {
@@ -13,9 +14,13 @@ namespace FFXIVVenues.VenueModels.V2022
         public ushort Room { get; set; }
         public bool Subdivision { get; set; }
         public string Shard { get; set; }
+        public string Override { get; set; }
 
         public override string ToString()
         {
+            if (!string.IsNullOrWhiteSpace(this.Override))
+                return this.Override;
+
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(this.DataCenter);
             stringBuilder.Append(", ");

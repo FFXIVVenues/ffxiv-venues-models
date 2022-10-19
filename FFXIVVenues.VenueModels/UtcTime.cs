@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FFXIVVenues.VenueModels.V2022
+namespace FFXIVVenues.VenueModels
 {
     public class UtcTime
     {

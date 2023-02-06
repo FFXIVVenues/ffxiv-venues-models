@@ -4,7 +4,7 @@ namespace FFXIVVenues.VenueModels.Tests;
 
 public class LocationTests
 {
-    private Location _location;
+    private Location? _location;
 
     [SetUp]
     public void Setup()
@@ -22,7 +22,7 @@ public class LocationTests
     [Test]
     public void WhenOverrideIsSetItIsReturned()
     {
-        this._location.Override = "This is an override";
+        this._location!.Override = "This is an override";
         Assert.AreEqual("This is an override", this._location.ToString());
     }
     
@@ -33,7 +33,7 @@ public class LocationTests
     [TestCase(null)]
     public void WhenOverrideIsNotSetItIsNotReturned(string str)
     {
-        this._location.Override = str;
+        this._location!.Override = str;
         Assert.AreEqual("Aether, Jenova, Lavender Beds, Ward 4, Apt 4", this._location.ToString());
     }
     

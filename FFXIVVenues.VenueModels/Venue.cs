@@ -22,6 +22,8 @@ namespace FFXIVVenues.VenueModels
         public List<string> Managers { get; set; } = new();
         public List<string> Tags { get; set; } = new();
         public bool Approved { get; set; }
+        public DateTime? LastModified { get; set; }
+        public DateTime? LastAudited { get; set; }
         public string MareCode { get; set; }
         public string MarePassword { get; set; }
         public bool Open => this.IsOpen();

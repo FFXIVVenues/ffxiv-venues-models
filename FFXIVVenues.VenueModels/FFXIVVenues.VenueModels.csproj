@@ -15,14 +15,15 @@
     <FileVersion>$(Version)</FileVersion>
     <Version>8.0.0</Version>
     <PackageTags>ffxiv; venues</PackageTags>
-    <Description>Data models for FFXIV Venues (includes 2021 and 2022 models).</Description>
-    <PackageReleaseNotes>Move models to new generic namespace and add Mare Password and Approved venue fields</PackageReleaseNotes>
+    <Description>Data models for FFXIV Venues.</Description>
+    <PackageReleaseNotes>Add Last Audited and Last Modified to Venue Model</PackageReleaseNotes>
     <DebugType>embedded</DebugType>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>9.0.0</PackageVersion>
+    <PackageVersion>10.0.0</PackageVersion>
+    <Title>FFXIVVenues.VenueModels</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -20,8 +20,15 @@ namespace FFXIVVenues.VenueModels
             var currentDay = DateTime.Now;
             var nextDay = currentDay.AddDays(1);
             var startTimeZone = TZConvert.GetTimeZoneInfo(this.TimeZone);
+
+            var hour = this._hour;
+            var isInvalidTime = startTimeZone.IsInvalidTime(new DateTime(currentDay.Year, currentDay.Month,
+                this.NextDay ? nextDay.Day : currentDay.Day, this.Hour, this.Minute, 0, DateTimeKind.Unspecified));
+            if (isInvalidTime)
+                hour++;
+            
             var utcTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
-                    new DateTime(currentDay.Year, currentDay.Month, this.NextDay ? nextDay.Day : currentDay.Day, this.Hour, this.Minute, 0, DateTimeKind.Unspecified),
+                    new DateTime(currentDay.Year, currentDay.Month, this.NextDay ? nextDay.Day : currentDay.Day, hour, this.Minute, 0, DateTimeKind.Unspecified),
                     startTimeZone.Id, TimeZoneInfo.Utc.Id);
             return new UtcTime()
             {

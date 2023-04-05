@@ -9,6 +9,7 @@ namespace FFXIVVenues.VenueModels
     {
         public string Id { get; set; }
         public string Name { get; set; } = "An mysterious venue";
+        public Uri BannerUri { get; init; }
         public DateTime Added { get; init; } = DateTime.UtcNow;
         public List<string> Description { get; set; } = new();
         public Location Location { get; set; } = new();

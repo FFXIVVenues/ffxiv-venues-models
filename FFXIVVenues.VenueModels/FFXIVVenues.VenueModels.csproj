@@ -22,7 +22,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>11.0.0</PackageVersion>
+    <PackageVersion>11.1.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

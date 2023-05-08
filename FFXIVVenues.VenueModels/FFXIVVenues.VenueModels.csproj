@@ -16,13 +16,13 @@
     <Version>8.0.0</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues.</Description>
-    <PackageReleaseNotes>HotFix: Fix issues wherein the day before Daylight saving could generate DateTimes that were invalid (they would fall inside the skipped period). </PackageReleaseNotes>
+    <PackageReleaseNotes>Add observability models</PackageReleaseNotes>
     <DebugType>embedded</DebugType>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>11.1.0</PackageVersion>
+    <PackageVersion>11.2.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -8,6 +8,7 @@ namespace FFXIVVenues.VenueModels.Observability
         Manager,
         Id,
         DataCenter,
-        World
+        World,
+        Approved
     }
 }

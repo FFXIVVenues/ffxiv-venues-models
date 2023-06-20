@@ -4,7 +4,7 @@ using System;
 
 namespace FFXIVVenues.VenueModels.Tests
 {
-    public class OpeningTests
+    public partial class OpeningTests
     {
         [Test]
         [TestCase(DayOfWeek.Sunday, 22, 30, false)]

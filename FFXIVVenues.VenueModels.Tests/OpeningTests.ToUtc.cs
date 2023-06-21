@@ -60,14 +60,14 @@ public partial class OpeningTests
                 Hour = expectedOpenHour,
                 Minute = expectedOpenMinute,
                 NextDay = expectedOpenNextDay,
-                TimeZone = timeZone
+                TimeZone = "UTC"
             },
             End = new Time
             {
                 Hour = expectedCloseHour,
                 Minute = expectedCloseMinute,
                 NextDay = expectedCloseNextDay,
-                TimeZone = timeZone
+                TimeZone = "UTC"
             }
         };
 

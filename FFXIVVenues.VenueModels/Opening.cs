@@ -10,8 +10,10 @@ namespace FFXIVVenues.VenueModels
         public Time End { get; set; }
         public Location Location { get; set; }
 
+        // todo: Remove these two fields, let client handle it by JS / .NET (by FFXIV Venues SDK)
+        // Warning: Everything is compatable with IANA IDs, but not all data in dbs are IANA. Will need
+        // a fixer to move these to IANA ids. Maybe move TimeZone up to Opening (instead of Time) at the same time. 
         public Opening Utc => this.ToUtc();
-        
         public bool IsNow => this.IsAt(DateTime.UtcNow);
 
         public bool IsAt(DateTime at) => 

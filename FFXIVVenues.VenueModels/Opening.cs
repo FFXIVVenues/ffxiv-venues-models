@@ -75,7 +75,7 @@ namespace FFXIVVenues.VenueModels
                     TimeZone = "UTC",
                     NextDay = this.Start.NextDay
                 },
-                End = new Time
+                End = this.End == null ? null : new Time
                 {
                     Hour = this.End.Hour,
                     Minute = this.End.Minute,
@@ -119,7 +119,10 @@ namespace FFXIVVenues.VenueModels
         
             adjustedOpening.Start.Hour = (ushort)(rolledStartMinutes / 60);
             adjustedOpening.Start.Minute = (ushort)(rolledStartMinutes % 60);
-        
+
+            if (adjustedOpening.End == null)
+                return adjustedOpening;
+            
             // Adjust the end time
             var totalEndMinutes = adjustedOpening.End.Hour * 60 + adjustedOpening.End.Minute + timezoneOffsetMinutes;
             var rolledEndMinutes = totalEndMinutes;

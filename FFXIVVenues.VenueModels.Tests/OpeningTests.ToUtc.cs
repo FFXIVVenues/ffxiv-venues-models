@@ -82,4 +82,40 @@ public partial class OpeningTests
         Assert.AreEqual(expected.End.NextDay, utcModel.End.NextDay);
         Assert.AreEqual(expected.End.TimeZone, utcModel.End.TimeZone);
     }
+
+    [Test]
+    public void ConvertsToUtcWithNullEnd()
+    {
+        var model = new Opening
+        {
+            Day = Day.Wednesday,
+            Start = new Time
+            {
+                Hour = 2,
+                Minute = 0,
+                NextDay = false,
+                TimeZone = "America/Denver"
+            }
+        };
+        
+        var expected = new Opening
+        {
+            Day = Day.Wednesday,
+            Start = new Time
+            {
+                Hour = 8,
+                Minute = 0,
+                NextDay = false,
+                TimeZone = "UTC"
+            }
+        };
+
+        var utcModel = model.Utc;
+        Assert.AreEqual(expected.Day, utcModel.Day);
+        Assert.AreEqual(expected.Start.Hour, utcModel.Start.Hour);
+        Assert.AreEqual(expected.Start.Minute, utcModel.Start.Minute);
+        Assert.AreEqual(expected.Start.NextDay, utcModel.Start.NextDay);
+        Assert.AreEqual(expected.Start.TimeZone, utcModel.Start.TimeZone);
+        Assert.IsNull(expected.End);
+    }
 }

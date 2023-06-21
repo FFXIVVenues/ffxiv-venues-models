@@ -11,6 +11,7 @@ namespace FFXIVVenues.VenueModels
         public Location Location { get; set; }
 
         public Opening Utc => this.ToUtc();
+        
         public bool IsNow => this.IsAt(DateTime.UtcNow);
 
         public bool IsAt(DateTime at) => 
@@ -66,14 +67,14 @@ namespace FFXIVVenues.VenueModels
                 {
                     Hour = this.Start.Hour,
                     Minute = this.Start.Minute,
-                    TimeZone = this.Start.TimeZone,
+                    TimeZone = "UTC",
                     NextDay = this.Start.NextDay
                 },
                 End = new Time
                 {
                     Hour = this.End.Hour,
                     Minute = this.End.Minute,
-                    TimeZone = this.End.TimeZone,
+                    TimeZone = "UTC",
                     NextDay = this.End.NextDay
                 }
             };

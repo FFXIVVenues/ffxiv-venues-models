@@ -4,6 +4,7 @@ namespace FFXIVVenues.VenueModels
 {
     public class Notice
     {
+        public string Id { get; set; } = IdHelper.GenerateId(3);
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public NoticeType Type { get; set; }

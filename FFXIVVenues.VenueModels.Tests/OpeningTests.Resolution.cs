@@ -137,7 +137,7 @@ namespace FFXIVVenues.VenueModels.Tests
         }
 
 
-        private static DateTime GetESTDate(DayOfWeek day, int hour, int minute)
+        private static DateTimeOffset GetESTDate(DayOfWeek day, int hour, int minute)
         {
             var testDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, hour, minute, 0, DateTimeKind.Utc);
             testDate = testDate.AddDays(-(int)testDate.DayOfWeek).AddDays((int)day);

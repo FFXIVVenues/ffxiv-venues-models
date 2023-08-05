@@ -18,29 +18,25 @@ namespace FFXIVVenues.VenueModels
         public UtcOpening Utc => this.ToUtc();
         public bool IsNow => this.IsAt(DateTime.UtcNow);
 
-        public bool IsAt(DateTime at) => 
+        public bool IsAt(DateTimeOffset at) => 
             this.Resolve(at).Open;
 
-        public (bool Open, DateTime Start, DateTime End) Resolve(DateTime at)
+        public (bool Open, DateTimeOffset Start, DateTimeOffset End) Resolve(DateTimeOffset at)
         {
-            var currentDate = new DateTime(at.Year, at.Month, at.Day, 0, 0, 0, at.Kind);
+            var currentDate = new DateTimeOffset(at.Year, at.Month, at.Day, 0, 0, 0, TimeSpan.Zero);
             var dayNumber = (int)currentDate.DayOfWeek - 1; // Monday is first day of the week for FFXIV Venues
             if (dayNumber == -1) dayNumber = 6;
             var weekBeginning = currentDate.AddDays(-dayNumber);
 
             var startTimeZone = TZConvert.GetTimeZoneInfo(this.Start.TimeZone);
-            var start = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
-                    new DateTime(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.Start.Hour, this.Start.Minute, 0, DateTimeKind.Unspecified),
-                    startTimeZone.Id, TimeZoneInfo.Utc.Id)
+            var timeZoneOffset = startTimeZone.GetUtcOffset(at);
+            var start = new DateTimeOffset(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.Start.Hour, this.Start.Minute, 0, timeZoneOffset)
                 .AddDays((int)this.Day + (this.Start.NextDay ? 1 : 0));
 
             var end = start.AddHours(3);
             if (this.End != null)
             {
-                var endTimeZone = TZConvert.GetTimeZoneInfo(this.End.TimeZone);
-                end = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
-                        new DateTime(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.End.Hour, this.End.Minute, 0, DateTimeKind.Unspecified),
-                        endTimeZone.Id, TimeZoneInfo.Utc.Id)
+                end = new DateTimeOffset(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.End.Hour, this.End.Minute, 0, timeZoneOffset)
                     .AddDays((int)this.Day + (this.End.NextDay ? 1 : 0));
             }
             if (end < start)

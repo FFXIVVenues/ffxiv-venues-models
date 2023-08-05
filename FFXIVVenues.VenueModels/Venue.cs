@@ -9,7 +9,7 @@ public class Venue
     public string Id { get; set; } = IdHelper.GenerateId();
     public string Name { get; set; } = "An mysterious venue";
     public Uri BannerUri { get; init; }
-    public DateTime Added { get; init; } = DateTime.UtcNow;
+    public DateTimeOffset Added { get; init; } = DateTimeOffset.UtcNow;
     public List<string> Description { get; set; } = new();
     public Location Location { get; set; } = new();
     public Uri Website { get; set; }
@@ -22,7 +22,7 @@ public class Venue
     public List<string> Managers { get; set; } = new();
     public List<string> Tags { get; set; } = new();
     public bool Approved { get; set; }
-    public DateTime? LastModified { get; set; }
+    public DateTimeOffset? LastModified { get; set; }
     public string MareCode { get; set; }
     public string MarePassword { get; set; }
     public bool Open => this.IsOpen();

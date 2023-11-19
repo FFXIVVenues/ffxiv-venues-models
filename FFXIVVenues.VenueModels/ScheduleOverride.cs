@@ -2,7 +2,7 @@
 
 namespace FFXIVVenues.VenueModels
 {
-    public class OpenOverride
+    public class ScheduleOverride
     {
         public bool Open { get; set; }
         public DateTimeOffset Start { get; set; }

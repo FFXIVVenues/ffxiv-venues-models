@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 	<ImplicitUsings>disable</ImplicitUsings>
@@ -22,7 +22,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>13.0.0</PackageVersion>
+    <PackageVersion>14.0.0-beta1</PackageVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace FFXIVVenues.VenueModels
+﻿using System;
+
+namespace FFXIVVenues.VenueModels
 {
     public enum Day
     {
@@ -21,5 +23,9 @@
 
         public static Day Scrub(this Day day, int scrub = 1) =>
             (Day)(((int)day + scrub) % 7);
+
+        public static DayOfWeek ToDayOfWeek(this Day day) =>
+            (DayOfWeek) ((int)(day + 1) % 7);
+
     }
 }

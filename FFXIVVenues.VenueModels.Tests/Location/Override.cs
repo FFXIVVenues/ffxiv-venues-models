@@ -1,15 +1,15 @@
 ﻿using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests;
+namespace FFXIVVenues.VenueModels.Tests.Location;
 
-public class LocationTests
+public class Override
 {
-    private Location? _location;
+    private VenueModels.Location? _location;
 
     [SetUp]
     public void Setup()
     {
-        this._location = new Location()
+        this._location = new VenueModels.Location()
         {
             Apartment = 4,
             District = "Lavender Beds",

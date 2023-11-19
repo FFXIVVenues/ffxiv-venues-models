@@ -7,7 +7,7 @@ namespace FFXIVVenues.VenueModels;
 public class Venue
 {
     public string Id { get; set; } = IdHelper.GenerateId();
-    public string Name { get; set; } = "An mysterious venue";
+    public string Name { get; set; } = "A mysterious venue";
     public Uri BannerUri { get; init; }
     public DateTimeOffset Added { get; init; } = DateTimeOffset.UtcNow;
     public List<string> Description { get; set; } = new();
@@ -16,8 +16,8 @@ public class Venue
     public Uri Discord { get; set; }
     public bool Hiring { get; set; }
     public bool Sfw { get; set; }
-    public List<Opening> Openings { get; set; } = new();
-    public List<OpenOverride> OpenOverrides { get; set; } = new();
+    public List<Schedule> Schedule { get; set; } = new();
+    public List<ScheduleOverride> ScheduleOverrides { get; set; } = new();
     public List<Notice> Notices { get; set; } = new();
     public List<string> Managers { get; set; } = new();
     public List<string> Tags { get; set; } = new();
@@ -27,12 +27,12 @@ public class Venue
     public string MarePassword { get; set; }
     public bool Open => this.IsOpen();
 
-    public Opening GetActiveOpening()
+    public Schedule GetActiveOpening()
     {
-        if (Openings == null || Openings.Count == 0)
+        if (Schedule == null || Schedule.Count == 0)
             return null;
 
-        foreach (var opening in Openings)
+        foreach (var opening in Schedule)
             if (opening.IsNow)
                 return opening;
 
@@ -41,9 +41,9 @@ public class Venue
 
     public bool IsOpen()
     {
-        if (this.OpenOverrides != null)
+        if (this.ScheduleOverrides != null)
         {
-            var @override = this.OpenOverrides.FirstOrDefault(o => o.IsNow);
+            var @override = this.ScheduleOverrides.FirstOrDefault(o => o.IsNow);
             if (@override != null) return @override.Open;
         }
 

@@ -2,7 +2,7 @@
 
 namespace FFXIVVenues.VenueModels
 {
-    public class UtcOpening
+    public class UtcSchedule
     {
         public Day Day { get; set; }
         public Time Start { get; set; }

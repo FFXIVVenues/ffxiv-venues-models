@@ -22,7 +22,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>14.0.0-beta1</PackageVersion>
+    <PackageVersion>14.0.0-beta2</PackageVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

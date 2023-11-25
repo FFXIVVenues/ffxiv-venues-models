@@ -33,51 +33,14 @@ namespace FFXIVVenues.VenueModels
             return (isNow, enumerator.Current!.Start, enumerator.Current!.End);
         }
 
-        public (bool Open, DateTimeOffset Start, DateTimeOffset End) OldResolve(DateTimeOffset at)
-        {
-            var currentDate = new DateTimeOffset(at.Year, at.Month, at.Day, 0, 0, 0, TimeSpan.Zero);
-            var dayNumber = (int)currentDate.DayOfWeek - 1; // Monday is first day of the week for FFXIV Venues
-            if (dayNumber == -1) dayNumber = 6;
-            var weekBeginning = currentDate.AddDays(-dayNumber);
-            
-            var startTimeZone = TZConvert.GetTimeZoneInfo(this.Start.TimeZone);
-            var timeZoneOffset = startTimeZone.GetUtcOffset(at);
-            var start = new DateTimeOffset(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.Start.Hour, this.Start.Minute, 0, timeZoneOffset)
-                .AddDays((int)this.Day + (this.Start.NextDay ? 1 : 0));
-
-            var end = start.AddHours(3);
-            if (this.End != null)
-            {
-                end = new DateTimeOffset(weekBeginning.Year, weekBeginning.Month, weekBeginning.Day, this.End.Hour, this.End.Minute, 0, timeZoneOffset)
-                    .AddDays((int)this.Day + (this.End.NextDay ? 1 : 0));
-            }
-            if (end < start)
-                end = end.AddDays(7);
-
-            if (!this.WithinWeekOf(at))
-                return (false, start, end);
-
-            if (at >= start && at < end)
-                return (true, start, end);
-
-            if (this.Day == Day.Sunday && at < start)
-            {
-                var adjustedStart = start.AddDays(-7);
-                var adjustedEnd = end.AddDays(-7);
-
-                if (at >= adjustedStart && at < adjustedEnd)
-                    return (true, adjustedStart, adjustedEnd);
-            }
-
-            return (at >= start && at < end, start, end);
-        }
-
         public bool WithinWeekOf(DateTimeOffset currentDate)
         {
-            if ((this.Interval?.IntervalArgument ?? 1) == 1)
+            if (this.Interval?.IntervalFrom == null)
+                return true;
+            if (this.Interval.IntervalArgument == 1)
                 return true;
             
-            var daysBetween = (int) (currentDate - this.Interval.IntervalFrom).TotalDays;
+            var daysBetween = (int) (currentDate - this.Interval.IntervalFrom.Value).TotalDays;
             if (daysBetween == 0)
                 return true;
 

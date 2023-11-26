@@ -6,6 +6,7 @@ namespace FFXIVVenues.VenueModels
     public class Schedule
     {
         
+        public DateTimeOffset? From { get; set; }
         public Day Day { get; set; }
         public Time Start { get; set; }
         public Time End { get; set; }
@@ -35,12 +36,14 @@ namespace FFXIVVenues.VenueModels
 
         public bool WithinWeekOf(DateTimeOffset currentDate)
         {
-            if (this.Interval?.IntervalFrom == null)
+            if (this.From == null)
                 return true;
+            if (currentDate.AddDays(7) < this.From)
+                return false;
             if (this.Interval.IntervalArgument == 1)
                 return true;
             
-            var daysBetween = (int) (currentDate - this.Interval.IntervalFrom.Value).TotalDays;
+            var daysBetween = (int) (currentDate - this.From.Value).TotalDays;
             if (daysBetween == 0)
                 return true;
 
@@ -58,6 +61,7 @@ namespace FFXIVVenues.VenueModels
             {
                 Day = this.Day,
                 Location = this.Location,
+                From = From?.ToUniversalTime(),
                 Start = new Time
                 {
                     Hour = this.Start.Hour,

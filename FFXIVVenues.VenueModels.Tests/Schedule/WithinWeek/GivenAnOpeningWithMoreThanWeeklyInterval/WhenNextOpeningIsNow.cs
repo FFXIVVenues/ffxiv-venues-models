@@ -21,9 +21,9 @@ public class WhenNextOpeningIsNow
             Day = day,
             Start = new Time {  Hour = startHour, Minute = startMinute, TimeZone = "UTC"},
             End = new Time { Hour = (ushort) ((startHour+2)%24), Minute = startMinute, TimeZone = "UTC"},
+            From = startDate,
             Interval = new Interval {
                 IntervalArgument = interval,
-                IntervalFrom = startDate
             }
         };
 

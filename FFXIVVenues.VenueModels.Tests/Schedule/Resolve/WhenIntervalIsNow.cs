@@ -14,10 +14,10 @@ public class WhenIntervalIsNow
         var model = new VenueModels.Schedule
         {
             Day = Day.Wednesday,
+            From = at.AddDays(-14),
             Interval = new Interval
             {
                 IntervalArgument = 2,
-                IntervalFrom = at.AddDays(-14)
             },
             Start = new Time
             {

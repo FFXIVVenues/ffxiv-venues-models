@@ -13,10 +13,10 @@ public class WhenGivenTimeIsOutsideOfWeek
             var model = new VenueModels.Schedule
             {
                 Day = Day.Wednesday,
+                From = timebase.AddDays(-7),
                 Interval = new Interval
                 {
                     IntervalArgument = 2,
-                    IntervalFrom = timebase.AddDays(-7) 
                 },
                 Start = new Time
                 {

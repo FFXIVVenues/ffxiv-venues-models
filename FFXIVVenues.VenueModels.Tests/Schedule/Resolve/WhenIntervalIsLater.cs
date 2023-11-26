@@ -14,11 +14,11 @@ public class WhenIntervalIsLater
         var model = new VenueModels.Schedule
         {
             Day = Day.Friday,
+            From = at.AddDays(-12),
             Interval = new Interval
             {
                 IntervalType = IntervalType.EveryXWeeks,
                 IntervalArgument = 2,
-                IntervalFrom = at.AddDays(-12)
             },
             Start = new Time
             {

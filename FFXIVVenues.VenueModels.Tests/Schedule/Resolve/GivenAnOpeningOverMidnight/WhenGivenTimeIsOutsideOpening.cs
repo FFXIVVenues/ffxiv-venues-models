@@ -2,7 +2,7 @@ using System;
 using FFXIVVenues.VenueModels.Tests.Helpers;
 using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests.Schedule.IsAt.GivenAnOpeningOverMidnight;
+namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningOverMidnight;
 
 public class WhenGivenTimeIsOutsideOpening
 {
@@ -12,7 +12,7 @@ public class WhenGivenTimeIsOutsideOpening
     [TestCase(DayOfWeek.Monday, 21, 59)]
     [TestCase(DayOfWeek.Tuesday, 1, 0)]
     [TestCase(DayOfWeek.Tuesday, 22, 30)]
-    public void ThenIsAtReturnsFalse(DayOfWeek day, int hour, int minute)
+    public void ThenResolveReturnsOpenFalse(DayOfWeek day, int hour, int minute)
     {
         var model = new VenueModels.Schedule
         {
@@ -34,7 +34,7 @@ public class WhenGivenTimeIsOutsideOpening
         };
 
         var at = DateOffsetGenerator.GetEstDate(day, hour, minute);
-        var result = model.IsAt(at);
+        var result = model.Resolve(at).IsOpen;
 
         Assert.IsFalse(result);
     }

@@ -19,40 +19,40 @@ namespace FFXIVVenues.VenueModels
         // This will mean Utc field is not needed even on client, because it can recognise the IANA ID and convert 
         // direct from Venue's source timezone to local.
         public UtcSchedule Utc => this.ToUtc();
-        public bool WithinWeek => this.WithinWeekOf(DateTime.UtcNow);
-        public bool IsNow => this.IsAt(DateTimeOffset.UtcNow);
-
-        public bool IsAt(DateTimeOffset at) => 
-            this.Resolve(at).Open;
         
-        public (bool Open, DateTimeOffset Start, DateTimeOffset End) Resolve(DateTimeOffset at)
+        private (bool IsOpen, Opening Opening)? _resolutionCache = null;
+        public bool IsNow => (_resolutionCache??=this.Resolve(DateTimeOffset.UtcNow)).IsOpen;
+        public bool IsWithinWeek => NextOpening.Start < DateTimeOffset.Now.AddDays(7);
+        public Opening NextOpening => (_resolutionCache??=this.Resolve(DateTimeOffset.UtcNow)).Opening;
+
+        public (bool IsOpen, Opening Opening) Resolve(DateTimeOffset at)
         {
             var enumerator = new ScheduleEnumerator(this, at);
             while (enumerator.MoveNext() && enumerator.Current?.End < at) continue;
             
             var isNow = at >= enumerator.Current!.Start && at < enumerator.Current!.End;
-            return (isNow, enumerator.Current!.Start, enumerator.Current!.End);
+            return (isNow, enumerator.Current);
         }
 
-        public bool WithinWeekOf(DateTimeOffset currentDate)
-        {
-            if (this.From == null)
-                return true;
-            if (currentDate.AddDays(7) < this.From)
-                return false;
-            if (this.Interval.IntervalArgument == 1)
-                return true;
-            
-            var daysBetween = (int) (currentDate - this.From.Value).TotalDays;
-            if (daysBetween == 0)
-                return true;
-
-            if (daysBetween < 0)
-                return daysBetween > -7;
-
-            var weekNumber = (daysBetween / 7) + 1;
-            return weekNumber % this.Interval.IntervalArgument == 0;
-        }
+        // public bool WithinWeekOf(DateTimeOffset currentDate)
+        // {
+        //     if (this.From == null)
+        //         return true;
+        //     if (currentDate.AddDays(7) < this.From)
+        //         return false;
+        //     if (this.Interval.IntervalArgument == 1)
+        //         return true;
+        //     
+        //     var daysBetween = (int) (currentDate - this.From.Value).TotalDays;
+        //     if (daysBetween == 0)
+        //         return true;
+        //
+        //     if (daysBetween < 0)
+        //         return daysBetween > -7;
+        //
+        //     var weekNumber = (daysBetween / 7) + 1;
+        //     return weekNumber % this.Interval.IntervalArgument == 0;
+        // }
         
         public UtcSchedule ToUtc()
         {

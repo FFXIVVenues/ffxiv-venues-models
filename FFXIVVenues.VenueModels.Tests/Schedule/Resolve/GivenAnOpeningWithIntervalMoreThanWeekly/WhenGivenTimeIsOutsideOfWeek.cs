@@ -2,18 +2,18 @@
 using FFXIVVenues.VenueModels.Tests.Helpers;
 using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests.Schedule.IsAt.GivenAnOpeningWithIntervalMoreThanWeekly;
+namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithIntervalMoreThanWeekly;
 
 public class WhenGivenTimeIsOutsideOfWeek
     {
         [Test]
-        public void ThenIsAtReturnsFalse()
+        public void ThenResolveReturnsOpenFalse()
         {
-            var timebase = DateOffsetGenerator.GetEstDate(DayOfWeek.Wednesday, 22, 0);
+            var at = DateOffsetGenerator.GetEstDate(DayOfWeek.Wednesday, 22, 0);
             var model = new VenueModels.Schedule
             {
                 Day = Day.Wednesday,
-                From = timebase.AddDays(-7),
+                From = at.AddDays(-7),
                 Interval = new Interval
                 {
                     IntervalArgument = 2,
@@ -33,6 +33,9 @@ public class WhenGivenTimeIsOutsideOfWeek
                     TimeZone = "Eastern Standard Time"
                 }
             };
-            Assert.IsFalse(model.IsAt(timebase));
+            
+            var result = model.Resolve(at).IsOpen;
+            
+            Assert.IsFalse(result);
         }
     }

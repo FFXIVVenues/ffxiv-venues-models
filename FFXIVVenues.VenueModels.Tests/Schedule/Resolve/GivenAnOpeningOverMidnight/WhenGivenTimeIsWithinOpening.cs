@@ -2,39 +2,40 @@
 using FFXIVVenues.VenueModels.Tests.Helpers;
 using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests.Schedule.IsAt.GivenAnOpeningInTheDay;
+namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningOverMidnight;
 
 public class WhenGivenTimeIsWithinOpening
 {
-        
+
     [Test]
-    [TestCase(DayOfWeek.Wednesday, 18, 0)]
-    [TestCase(DayOfWeek.Wednesday, 18, 30)]
-    [TestCase(DayOfWeek.Wednesday, 20, 59)]
-    public void ThenIsAtReturnsTrue(DayOfWeek day, int hour, int minute)
+    [TestCase(DayOfWeek.Monday, 22, 0)]
+    [TestCase(DayOfWeek.Monday, 22, 30)]
+    [TestCase(DayOfWeek.Tuesday, 0, 59)]
+    public void ThenResolveReturnsOpenTrue(DayOfWeek day, int hour, int minute)
     {
         var model = new VenueModels.Schedule
         {
-            Day = Day.Wednesday,
+            Day = 0,
             Start = new Time
             {
-                Hour = 18,
+                Hour = 22,
                 Minute = 0,
                 NextDay = false,
                 TimeZone = "Eastern Standard Time"
             },
             End = new Time
             {
-                Hour = 21,
+                Hour = 1,
                 Minute = 0,
-                NextDay = false,
+                NextDay = true,
                 TimeZone = "Eastern Standard Time"
             }
         };
 
         var at = DateOffsetGenerator.GetEstDate(day, hour, minute);
-        var result = model.IsAt(at);
-            
+        var result = model.Resolve(at).IsOpen;
+
         Assert.IsTrue(result);
     }
+
 }

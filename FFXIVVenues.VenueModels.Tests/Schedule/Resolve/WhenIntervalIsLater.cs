@@ -38,8 +38,8 @@ public class WhenIntervalIsLater
             
         var result = model.Resolve(at);
             
-        Assert.AreEqual(at.AddDays(2), result.Start, "The resulting start date is not as expected.");
-        Assert.AreEqual(at.AddDays(2).AddHours(3), result.End, "The resulting end date is not as expected.");
+        Assert.AreEqual(at.AddDays(2), result.Opening.Start, "The resulting start date is not as expected.");
+        Assert.AreEqual(at.AddDays(2).AddHours(3), result.Opening.End, "The resulting end date is not as expected.");
     }
 
 }

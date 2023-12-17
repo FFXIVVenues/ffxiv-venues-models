@@ -17,7 +17,7 @@ public class ScheduleEnumerator : IEnumerator<Opening>
     public ScheduleEnumerator(Schedule schedule, DateTimeOffset? fromFallback = null)
     {
         this._schedule = schedule;
-        this._from = this._schedule.From ?? fromFallback 
+        this._from = this._schedule.Commencing ?? fromFallback 
                    ?? throw new ArgumentNullException(nameof(fromFallback), "No start point for enumeration given; provide either a fallback argument or a schedule with a IntervalFrom.");
         this._interval = this._schedule.Interval?.IntervalArgument ?? 1;
         this._timeZone = TZConvert.GetTimeZoneInfo(this._schedule.Start.TimeZone);

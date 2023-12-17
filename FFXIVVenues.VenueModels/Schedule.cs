@@ -6,54 +6,30 @@ namespace FFXIVVenues.VenueModels
     public class Schedule
     {
         
-        public DateTimeOffset? From { get; set; }
+        public DateTimeOffset? Commencing { get; set; }
         public Day Day { get; set; }
         public Time Start { get; set; }
         public Time End { get; set; }
         public Interval Interval { get; set; }
         public Location Location { get; set; }
-
+        public Opening Resolution => _resolutionCache??=this.Resolve(DateTimeOffset.UtcNow);
+        public UtcSchedule Utc => this.ToUtc();
         // todo: Remove these two fields (leave just methods), let client handle it by JS / .NET (by FFXIV Venues SDK)
         // Warning: Everything is compatable with IANA IDs, but not all data in dbs are IANA. Will need
         // a fixer to move these to IANA ids. Maybe move TimeZone up to Opening (instead of Time) at the same time. 
         // This will mean Utc field is not needed even on client, because it can recognise the IANA ID and convert 
         // direct from Venue's source timezone to local.
-        public UtcSchedule Utc => this.ToUtc();
         
-        private (bool IsOpen, Opening Opening)? _resolutionCache = null;
-        public bool IsNow => (_resolutionCache??=this.Resolve(DateTimeOffset.UtcNow)).IsOpen;
-        public bool IsWithinWeek => NextOpening.Start < DateTimeOffset.Now.AddDays(7);
-        public Opening NextOpening => (_resolutionCache??=this.Resolve(DateTimeOffset.UtcNow)).Opening;
+        private Opening? _resolutionCache = null;
 
-        public (bool IsOpen, Opening Opening) Resolve(DateTimeOffset at)
+        public Opening Resolve(DateTimeOffset from)
         {
-            var enumerator = new ScheduleEnumerator(this, at);
-            while (enumerator.MoveNext() && enumerator.Current?.End < at) continue;
+            var enumerator = new ScheduleEnumerator(this, from);
+            while (enumerator.MoveNext() && enumerator.Current?.End < from) continue;
             
-            var isNow = at >= enumerator.Current!.Start && at < enumerator.Current!.End;
-            return (isNow, enumerator.Current);
+            return enumerator.Current!;
         }
 
-        // public bool WithinWeekOf(DateTimeOffset currentDate)
-        // {
-        //     if (this.From == null)
-        //         return true;
-        //     if (currentDate.AddDays(7) < this.From)
-        //         return false;
-        //     if (this.Interval.IntervalArgument == 1)
-        //         return true;
-        //     
-        //     var daysBetween = (int) (currentDate - this.From.Value).TotalDays;
-        //     if (daysBetween == 0)
-        //         return true;
-        //
-        //     if (daysBetween < 0)
-        //         return daysBetween > -7;
-        //
-        //     var weekNumber = (daysBetween / 7) + 1;
-        //     return weekNumber % this.Interval.IntervalArgument == 0;
-        // }
-        
         public UtcSchedule ToUtc()
         {
             // Create a new Opening object to hold the adjusted values
@@ -61,7 +37,7 @@ namespace FFXIVVenues.VenueModels
             {
                 Day = this.Day,
                 Location = this.Location,
-                From = From?.ToUniversalTime(),
+                From = Commencing?.ToUniversalTime(),
                 Start = new Time
                 {
                     Hour = this.Start.Hour,

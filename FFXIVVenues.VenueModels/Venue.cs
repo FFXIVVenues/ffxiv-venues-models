@@ -25,29 +25,56 @@ public class Venue
     public DateTimeOffset? LastModified { get; set; }
     public string MareCode { get; set; }
     public string MarePassword { get; set; }
-    public bool Open => this.IsOpen();
+    public Opening? Resolution => _resolutionCache??=this.Resolve(DateTimeOffset.UtcNow);
+    private Opening? _resolutionCache = null;
 
-    public Schedule GetActiveOpening()
+    public Opening? Resolve(DateTimeOffset at)
     {
-        if (Schedule == null || Schedule.Count == 0)
-            return null;
+        var overrides = this.ScheduleOverrides.OrderBy(o => o.Start).ToList();
+        var openingOverride = overrides.FirstOrDefault(o => o is { Open: true } && o.End > at);
+        if (openingOverride is { IsNow: true }) return new (openingOverride.Start, openingOverride.End);
 
-        foreach (var opening in Schedule)
-            if (opening.IsNow)
-                return opening;
-
-        return null;
-    }
-
-    public bool IsOpen()
-    {
-        if (this.ScheduleOverrides != null)
+        if (Schedule is null || Schedule.Count == 0)
+            return openingOverride is not null ? new(openingOverride.Start, openingOverride.End) : null;
+        
+        var closingOverrides = overrides.Where(o => o is { Open: false } && o.End > at).ToList();
+        
+        Opening? earliestOpening = null;
+        
+        var earliestClosingOverride = closingOverrides.FirstOrDefault();
+        if (earliestClosingOverride is not { IsNow: true })
         {
-            var @override = this.ScheduleOverrides.FirstOrDefault(o => o.IsNow);
-            if (@override != null) return @override.Open;
+            earliestOpening = this.Schedule
+                .Select(s => s.Resolve(at))
+                .OrderBy(s => s.Start)
+                .FirstOrDefault(s =>
+                    earliestClosingOverride is null || s.Start < earliestClosingOverride.Start);
+            if (earliestClosingOverride is not null && earliestOpening is not null)
+                earliestOpening = earliestOpening.Truncate(earliestClosingOverride.Start, earliestClosingOverride.End).FirstOrDefault();
         }
 
-        return GetActiveOpening() != null;
+        if (earliestOpening is null)
+            for (var i = 0; i < closingOverrides.Count; i++)
+            {
+                var closingOverride = closingOverrides[i];
+                var nextClosingOverride = i + 1 < closingOverrides.Count ? closingOverrides[i + 1] : null;
+                earliestOpening = this.Schedule
+                    .Select(s => s.Resolve(closingOverride.End))
+                    .Where(rs => nextClosingOverride is null || rs.Start < nextClosingOverride.Start)
+                    .MinBy(rs => rs.Start);
+
+                if (nextClosingOverride is not null && earliestOpening is not null)
+                    earliestOpening = earliestOpening.Truncate(nextClosingOverride.Start, nextClosingOverride.End).FirstOrDefault();
+                
+                // If an opening schedule is found, break the loop
+                if (earliestOpening is not null)
+                    break;
+            }
+        
+        if (openingOverride is not null && openingOverride.Start < earliestOpening!.Start)
+            return new(openingOverride.Start, openingOverride.End > earliestOpening.Start ? earliestOpening.End : openingOverride.End);
+        
+        return earliestOpening;
     }
 
 

@@ -14,7 +14,7 @@ public class WhenIntervalIsNow
         var model = new VenueModels.Schedule
         {
             Day = Day.Wednesday,
-            From = at.AddDays(-14),
+            Commencing = at.AddDays(-14),
             Interval = new Interval
             {
                 IntervalArgument = 2,
@@ -37,8 +37,8 @@ public class WhenIntervalIsNow
             
         var result = model.Resolve(at);
             
-        Assert.AreEqual(at, result.Opening.Start, "The resulting start date is not as expected.");
-        Assert.AreEqual(at.AddHours(3), result.Opening.End, "The resulting end date is not as expected.");
+        Assert.AreEqual(at, result.Start, "The resulting start date is not as expected.");
+        Assert.AreEqual(at.AddHours(3), result.End, "The resulting end date is not as expected.");
     }
 
 

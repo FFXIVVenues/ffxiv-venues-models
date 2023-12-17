@@ -14,32 +14,16 @@ public class WhenIntervalIsLater
         var model = new VenueModels.Schedule
         {
             Day = Day.Friday,
-            From = at.AddDays(-12),
-            Interval = new Interval
-            {
-                IntervalType = IntervalType.EveryXWeeks,
-                IntervalArgument = 2,
-            },
-            Start = new Time
-            {
-                Hour = 22,
-                Minute = 0,
-                NextDay = false,
-                TimeZone = "Eastern Standard Time"
-            },
-            End = new Time
-            {
-                Hour = 1,
-                Minute = 0,
-                NextDay = true,
-                TimeZone = "Eastern Standard Time"
-            }
+            Commencing = at.AddDays(-12),
+            Interval = new Interval { IntervalType = IntervalType.EveryXWeeks, IntervalArgument = 2 },
+            Start = new Time { Hour = 22, Minute = 0, NextDay = false, TimeZone = "Eastern Standard Time" },
+            End = new Time { Hour = 1, Minute = 0, NextDay = true, TimeZone = "Eastern Standard Time" }
         };
             
         var result = model.Resolve(at);
             
-        Assert.AreEqual(at.AddDays(2), result.Opening.Start, "The resulting start date is not as expected.");
-        Assert.AreEqual(at.AddDays(2).AddHours(3), result.Opening.End, "The resulting end date is not as expected.");
+        Assert.AreEqual(at.AddDays(2), result.Start, "The resulting start date is not as expected.");
+        Assert.AreEqual(at.AddDays(2).AddHours(3), result.End, "The resulting end date is not as expected.");
     }
 
 }

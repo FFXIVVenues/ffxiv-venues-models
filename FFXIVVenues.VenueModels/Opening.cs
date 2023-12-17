@@ -4,6 +4,15 @@ namespace FFXIVVenues.VenueModels;
 
 public record Opening(DateTimeOffset Start, DateTimeOffset End)
 {
+    public bool IsNow => this.IsAt(DateTimeOffset.UtcNow);
+    public bool IsWithinWeek => this.IsWithinWeekOf(DateTimeOffset.Now);
+
+    public bool IsAt(DateTimeOffset at) =>
+        at >= Start && at < End;
+    
+    public bool IsWithinWeekOf(DateTimeOffset at) =>
+        Start < at.AddDays(7);
+    
     public Opening AddDays(int days)
     {
         var newStart = this.Start.AddDays(days);
@@ -19,4 +28,22 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
         var newEnd = new DateTimeOffset(this.End.Year, this.End.Month, this.End.Day, this.End.Hour, this.End.Minute, 0, endOffset);
         return new Opening(newStart, newEnd);
     }
+
+    public Opening[] Truncate(DateTimeOffset startRemove, DateTimeOffset endRemove)
+    {
+        if (endRemove <= this.Start || startRemove >= this.End)
+            return new[] { this };
+        else if (startRemove <= this.Start && endRemove >= this.End)
+            return Array.Empty<Opening>();
+        else if (startRemove <= this.Start)
+            return new [] { new Opening(endRemove, this.End) };
+        else if (endRemove >= this.End)
+            return new [] { new Opening(this.Start, startRemove) };
+        else
+            return new [] { 
+                new Opening(this.Start, startRemove), 
+                new Opening(endRemove, this.End)
+            };
+    }
+    
 }

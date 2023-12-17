@@ -13,7 +13,7 @@ public class WhenGivenTimeIsOutsideOfWeek
             var model = new VenueModels.Schedule
             {
                 Day = Day.Wednesday,
-                From = at.AddDays(-7),
+                Commencing = at.AddDays(-7),
                 Interval = new Interval
                 {
                     IntervalArgument = 2,
@@ -34,7 +34,7 @@ public class WhenGivenTimeIsOutsideOfWeek
                 }
             };
             
-            var result = model.Resolve(at).IsOpen;
+            var result = model.Resolve(at).IsAt(at);
             
             Assert.IsFalse(result);
         }

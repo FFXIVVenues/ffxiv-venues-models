@@ -4,7 +4,6 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
 	<ImplicitUsings>disable</ImplicitUsings>
     <PackageId>$(AssemblyName)</PackageId>
     <Authors>Kana Ki @ Gilgamesh</Authors>
@@ -22,7 +21,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>14.0.0-beta5</PackageVersion>
+    <PackageVersion>14.0.0-beta6</PackageVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

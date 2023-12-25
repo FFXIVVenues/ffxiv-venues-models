@@ -8,9 +8,9 @@ namespace FFXIVVenues.VenueModels
         
         public DateTimeOffset? Commencing { get; set; }
         public Day Day { get; set; }
-        public Time Start { get; set; }
-        public Time End { get; set; }
-        public Interval Interval { get; set; }
+        public Time Start { get; set; } = new();
+        public Time? End { get; set; }
+        public Interval Interval { get; set; } = new ();
         public Location Location { get; set; }
         public Opening Resolution => _resolutionCache??=this.Resolve(DateTimeOffset.UtcNow);
         public UtcSchedule Utc => this.ToUtc();

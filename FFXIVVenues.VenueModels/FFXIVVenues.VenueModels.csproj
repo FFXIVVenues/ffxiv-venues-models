@@ -15,13 +15,13 @@
     <Version>8.0.0</Version>
     <PackageTags>ffxiv; venues</PackageTags>
     <Description>Data models for FFXIV Venues.</Description>
-    <PackageReleaseNotes>Add variable weekly schedules and schedule resolution.</PackageReleaseNotes>
+    <PackageReleaseNotes>Set Interval on schedule to be default object rather than null</PackageReleaseNotes>
     <DebugType>embedded</DebugType>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageVersion>14.0.0</PackageVersion>
+    <PackageVersion>14.0.1</PackageVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

@@ -12,7 +12,7 @@ public class WhenThereIsMultipleOpeningsPerWeek
     public void ThenResolveReturnsThatOpeningResolved()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var expectedSchedules = new[]
         {

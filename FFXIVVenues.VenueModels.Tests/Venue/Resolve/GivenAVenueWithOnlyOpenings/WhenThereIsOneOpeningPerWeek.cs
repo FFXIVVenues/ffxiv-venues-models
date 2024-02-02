@@ -12,7 +12,7 @@ public class WhenThereIsOneOpeningPerWeek
     public void ThenResolveReturnsThatOpeningResolved()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Sunday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Sunday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var expectedSchedule = new VenueModels.Schedule()
         {

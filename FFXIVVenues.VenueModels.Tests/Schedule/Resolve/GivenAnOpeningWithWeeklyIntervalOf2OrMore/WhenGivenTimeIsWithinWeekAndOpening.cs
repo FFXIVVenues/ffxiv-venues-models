@@ -2,20 +2,21 @@
 using FFXIVVenues.VenueModels.Tests.Helpers;
 using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithIntervalMoreThanWeekly;
+namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithWeeklyIntervalOf2OrMore;
 
 public class WhenGivenTimeIsWithinWeekAndOpening
 {
     [Test]
     public void ThenResolveReturnsOpenTrue()
     {
-        var at = DateOffsetGenerator.GetEstDate(DayOfWeek.Wednesday, 22, 0);
+        var at = DateOffsetGenerator.GetDate(DayOfWeek.Wednesday, 22, 0);
         var model = new VenueModels.Schedule
         {
             Day = Day.Wednesday,
             Commencing = at.AddDays(-14),
             Interval = new Interval
             {
+                IntervalType = IntervalType.EveryXWeeks,
                 IntervalArgument = 2,
             },
             Start = new Time

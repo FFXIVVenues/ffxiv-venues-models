@@ -19,6 +19,35 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
         var newEnd = this.End.AddDays(days);
         return new Opening(newStart, newEnd);
     }
+
+    public Opening AddMonths(int months)
+    {
+        var newStart = this.Start.AddMonths(months);
+        var newEnd = this.End.AddMonths(months);
+        return new Opening(newStart, newEnd);
+    }
+
+    public Opening ResetDay()
+    {
+        var resetSpan = (this.Start.Day - 1);
+        var newStart = this.Start.AddDays(-resetSpan);
+        var newEnd = this.End.AddDays(-resetSpan);
+        return new Opening(newStart, newEnd);
+    }
+
+    public Opening RollToDay(Day day)
+    {
+        var dayOfWeek = day.ToDayOfWeek();
+        var daysUntilTargetDayStart = ((int)dayOfWeek - (int)this.Start.DayOfWeek + 7) % 7;
+        var daysUntilTargetDayEnd = ((int)dayOfWeek - (int)this.End.DayOfWeek + 7) % 7;
+            
+        var newStart = this.Start.AddDays(daysUntilTargetDayStart);
+        var newEnd = this.End.AddDays(daysUntilTargetDayEnd);
+        if (newStart > newEnd)
+            newEnd = newEnd.AddDays(1);
+        
+        return new Opening(newStart, newEnd);
+    }
     
     public Opening SetOffset(TimeZoneInfo timeZone)
     {

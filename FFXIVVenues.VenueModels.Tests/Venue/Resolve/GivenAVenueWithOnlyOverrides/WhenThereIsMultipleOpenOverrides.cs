@@ -10,19 +10,19 @@ public class WhenThereIsMultipleOpenOverrides
     public void ThenResolveReturnsTheEarliestOpeningResolved()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var expectedOverride = new ScheduleOverride
         {
             Open = true,
-            Start = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 17, 00),
-            End = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 19, 00),
+            Start = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 17, 00),
+            End = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 19, 00),
         };
         var laterOverride = new ScheduleOverride
         {
             Open = true,
-            Start = DateOffsetGenerator.GetEstDate(DayOfWeek.Thursday, 17, 00),
-            End = DateOffsetGenerator.GetEstDate(DayOfWeek.Thursday, 19, 00),
+            Start = DateOffsetGenerator.GetDate(DayOfWeek.Thursday, 17, 00),
+            End = DateOffsetGenerator.GetDate(DayOfWeek.Thursday, 19, 00),
         }; 
         venue.ScheduleOverrides.Add(expectedOverride);
         venue.ScheduleOverrides.Add(laterOverride);

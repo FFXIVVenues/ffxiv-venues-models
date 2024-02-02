@@ -32,7 +32,7 @@ public class WhenGivenTimeIsWithinOpening
              }
          };
              
-         var at = DateOffsetGenerator.GetEstDate(day, hour, minute);
+         var at = DateOffsetGenerator.GetDate(day, hour, minute);
      
          // Act
          var result = model.Resolve(at).IsAt(at);

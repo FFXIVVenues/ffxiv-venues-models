@@ -10,7 +10,7 @@ public class WhenTheFullScheduleIsOverridden
     public void ThenResolveReturnsTheNextSchedule()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var @override = new ScheduleOverride
         {

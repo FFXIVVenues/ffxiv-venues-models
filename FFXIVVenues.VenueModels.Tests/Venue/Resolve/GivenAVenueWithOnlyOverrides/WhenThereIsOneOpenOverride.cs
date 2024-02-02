@@ -10,13 +10,13 @@ public class WhenThereIsOneOpenOverride
     public void ThenResolveReturnsThatOpeningResolved()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Sunday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Sunday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var expectedOverride = new ScheduleOverride
         {
             Open = true,
-            Start = DateOffsetGenerator.GetEstDate(DayOfWeek.Sunday, 17, 00),
-            End = DateOffsetGenerator.GetEstDate(DayOfWeek.Sunday, 19, 00),
+            Start = DateOffsetGenerator.GetDate(DayOfWeek.Sunday, 17, 00),
+            End = DateOffsetGenerator.GetDate(DayOfWeek.Sunday, 19, 00),
         };
         venue.ScheduleOverrides.Add(expectedOverride);
       

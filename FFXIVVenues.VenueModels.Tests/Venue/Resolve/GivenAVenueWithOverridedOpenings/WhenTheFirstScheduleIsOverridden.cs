@@ -10,13 +10,13 @@ public class WhenTheFirstScheduleIsOverridden
     public void ThenResolveReturnsTheNextSchedule()
     {
         // Arrange
-        var from = DateOffsetGenerator.GetEstDate(DayOfWeek.Tuesday, 15, 15);
+        var from = DateOffsetGenerator.GetDate(DayOfWeek.Tuesday, 15, 15);
         var venue = VenueGenerator.GenerateVenue();
         var @override = new ScheduleOverride
         {
             Open = false,
-            Start = DateOffsetGenerator.GetEstDate(DayOfWeek.Wednesday, 17, 00),
-            End = DateOffsetGenerator.GetEstDate(DayOfWeek.Thursday, 0, 00),
+            Start = DateOffsetGenerator.GetDate(DayOfWeek.Wednesday, 17, 00),
+            End = DateOffsetGenerator.GetDate(DayOfWeek.Thursday, 0, 00),
         };
         venue.ScheduleOverrides.Add(@override);
         var schedules = new[]

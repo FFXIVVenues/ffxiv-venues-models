@@ -22,8 +22,17 @@ public class ScheduleEnumerator : IEnumerator<Opening>
         this._interval = this._schedule.Interval?.IntervalArgument ?? 1;
         this._timeZone = TZConvert.GetTimeZoneInfo(this._schedule.Start.TimeZone);
     }
-    
+
     public bool MoveNext()
+    {
+        if (this._schedule.Interval.IntervalType == IntervalType.EveryXWeeks)
+            return this.MoveNextByXWeeks();
+        if (this._schedule.Interval.IntervalType == IntervalType.EveryXthDayOfTheMonth)
+            return this.MoveNextByXthDayOfMonth();
+        return false;
+    }
+    
+    private bool MoveNextByXWeeks()
     {
         if (this.Current != null)
         {
@@ -45,10 +54,10 @@ public class ScheduleEnumerator : IEnumerator<Opening>
         if (basis.Offset != openingOffset)
             basis = basis.ToOffset(openingOffset);
 
-        var dayOfWeek = this._schedule.Day.ToDayOfWeek();
-        if (this._schedule.Start.Hour > end.Hour || (this._schedule.Start.Hour == end.Hour && this._schedule.Start.Minute > end.Minute))
-            dayOfWeek = (DayOfWeek) (((int)dayOfWeek + 1) % 7);
-        var daysUntilTarget = (dayOfWeek - basis.DayOfWeek + 7) % 7;
+        var dayOfWeek = this._schedule.Day;
+        if ( ! end.IsLaterThan(this._schedule.Start.Hour, this._schedule.Start.Minute))
+            dayOfWeek = dayOfWeek.Next();
+        var daysUntilTarget = (dayOfWeek.ToDayOfWeek() - basis.DayOfWeek + 7) % 7;
         var firstClosing = new DateTimeOffset(basis.Year, basis.Month, basis.Day, end.Hour, end.Minute, 0, basis.Offset).AddDays(daysUntilTarget);
         if (firstClosing <= basis)
             firstClosing = firstClosing.AddDays(7);
@@ -62,6 +71,47 @@ public class ScheduleEnumerator : IEnumerator<Opening>
         return true;
     }
 
+    private bool MoveNextByXthDayOfMonth()
+    {
+        if (this.Current != null)
+        {
+            this.Current = this.Current
+                .AddMonths(1)
+                .ResetDay()
+                .RollToDay(this._schedule.Day)
+                .AddDays(7 * (this._schedule.Interval.IntervalArgument - 1))
+                .SetOffset(_timeZone);
+            return true; 
+        }
+        
+        var end = this._schedule.End ?? new Time
+        {
+            Hour = (ushort)((this._schedule.Start.Hour + 3) % 24),
+            Minute = this._schedule.Start.Minute,
+            TimeZone = this._schedule.Start.TimeZone
+        };
+        
+        var basis = this._from;
+        var offset = this._timeZone.GetUtcOffset(basis);
+
+        var initialStart = new DateTimeOffset(basis.Year, basis.Month, 1,
+            this._schedule.Start.Hour, this._schedule.Start.Minute, 0, offset); 
+        var initialEnd = new DateTimeOffset(basis.Year, basis.Month, 1,
+            end.Hour, end.Minute, 0, offset);
+        if (initialStart > initialEnd)
+            initialEnd = initialEnd.AddDays(1);
+
+        this.Current = new Opening(initialStart, initialEnd)
+            .RollToDay(this._schedule.Day)
+            .AddDays(7 * (this._schedule.Interval.IntervalArgument - 1))
+            .SetOffset(_timeZone);
+
+        if (this.Current!.End < basis)
+            return this.MoveNextByXthDayOfMonth();
+        
+        return true;
+    }
+    
     public void Reset() =>
         this.Current = null;
 

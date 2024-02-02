@@ -13,6 +13,9 @@ namespace FFXIVVenues.VenueModels
         // todo: move this to Opening
         public string TimeZone { get; set; } = TimeZoneInfo.Utc.Id;
         public bool NextDay { get; set; }
+
+        public bool IsLaterThan(ushort hour, ushort minute) =>
+            _hour > hour || (_hour == hour && _minute > minute);
     }
 
 }

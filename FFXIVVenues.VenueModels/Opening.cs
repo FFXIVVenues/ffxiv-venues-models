@@ -38,11 +38,10 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
     public Opening RollToDay(Day day)
     {
         var dayOfWeek = day.ToDayOfWeek();
-        var daysUntilTargetDayStart = ((int)dayOfWeek - (int)this.Start.DayOfWeek + 7) % 7;
-        var daysUntilTargetDayEnd = ((int)dayOfWeek - (int)this.End.DayOfWeek + 7) % 7;
+        var rollForward = ((int)dayOfWeek - (int)this.Start.DayOfWeek + 7) % 7;
             
-        var newStart = this.Start.AddDays(daysUntilTargetDayStart);
-        var newEnd = this.End.AddDays(daysUntilTargetDayEnd);
+        var newStart = this.Start.AddDays(rollForward);
+        var newEnd = this.End.AddDays(rollForward);
         if (newStart > newEnd)
             newEnd = newEnd.AddDays(1);
         

@@ -4,17 +4,17 @@ using NUnit.Framework;
 
 namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithWeeklyIntervalOf2OrMore;
 
-public class WhenIntervalIsNow
+public class WhenNextOccurenceIsLater
 {
 
     [Test]
-    public void ThenResolveReturnsNow()
+    public void ThenResolveReturnsLater()
     {
         var at = DateOffsetGenerator.GetDate(DayOfWeek.Wednesday, 22, 0);
         var model = new VenueModels.Schedule
         {
-            Day = Day.Wednesday,
-            Commencing = at.AddDays(-14),
+            Day = Day.Friday,
+            Commencing = at.AddDays(-12),
             Interval = new Interval { IntervalType = IntervalType.EveryXWeeks, IntervalArgument = 2 },
             Start = new Time { Hour = 22, Minute = 0, NextDay = false, TimeZone = "Eastern Standard Time" },
             End = new Time { Hour = 1, Minute = 0, NextDay = true, TimeZone = "Eastern Standard Time" }
@@ -22,8 +22,8 @@ public class WhenIntervalIsNow
             
         var result = model.Resolve(at);
             
-        Assert.AreEqual(at, result.Start, "The resulting start date is not as expected.");
-        Assert.AreEqual(at.AddHours(3), result.End, "The resulting end date is not as expected.");
+        Assert.AreEqual(at.AddDays(2), result.Start, "The resulting start date is not as expected.");
+        Assert.AreEqual(at.AddDays(2).AddHours(3), result.End, "The resulting end date is not as expected.");
     }
-    
+
 }

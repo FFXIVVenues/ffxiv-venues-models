@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithMonthlyOpening;
 
-public class WhenIntervalIsNow
+public class WhenNextOccurenceIsNow
 {
 
     [Test]

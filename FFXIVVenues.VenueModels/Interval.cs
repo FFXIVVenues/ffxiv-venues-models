@@ -11,5 +11,5 @@ public class Interval
 public enum IntervalType
 {
     EveryXWeeks = 0,
-    EveryXthDayOfTheMonth = 1,
+    EveryXthDayOfTheMonth = 1, 
 }

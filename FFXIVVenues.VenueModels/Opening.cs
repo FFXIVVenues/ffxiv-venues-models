@@ -19,6 +19,13 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
         var newEnd = this.End.AddDays(days);
         return new Opening(newStart, newEnd);
     }
+    
+    public Opening RemoveDays(int days)
+    {
+        var newStart = this.Start.AddDays(-days);
+        var newEnd = this.End.AddDays(-days);
+        return new Opening(newStart, newEnd);
+    }
 
     public Opening AddMonths(int months)
     {
@@ -35,6 +42,15 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
         return new Opening(newStart, newEnd);
     }
 
+    public Opening MaxDay()
+    {
+        var days = DateTime.DaysInMonth(this.Start.Year, this.Start.Month);
+        var resetSpan = days - this.Start.Day;
+        var newStart = this.Start.AddDays(resetSpan);
+        var newEnd = this.End.AddDays(resetSpan);
+        return new Opening(newStart, newEnd);
+    }
+
     public Opening RollToDay(Day day)
     {
         var dayOfWeek = day.ToDayOfWeek();
@@ -45,6 +61,19 @@ public record Opening(DateTimeOffset Start, DateTimeOffset End)
         if (newStart > newEnd)
             newEnd = newEnd.AddDays(1);
         
+        return new Opening(newStart, newEnd);
+    }
+
+    public Opening RollBackToDay(Day day)
+    {
+        var dayOfWeek = day.ToDayOfWeek();
+        var rollBackwards = ((int)this.Start.DayOfWeek - (int)dayOfWeek + 7) % 7;
+
+        var newStart = this.Start.AddDays(-rollBackwards);
+        var newEnd = this.End.AddDays(-rollBackwards);
+        if (newStart > newEnd)
+            newEnd = newEnd.AddDays(1);
+
         return new Opening(newStart, newEnd);
     }
     

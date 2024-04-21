@@ -2,7 +2,7 @@
 using FFXIVVenues.VenueModels.Tests.Helpers;
 using NUnit.Framework;
 
-namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithMonthlyOpening;
+namespace FFXIVVenues.VenueModels.Tests.Schedule.Resolve.GivenAnOpeningWithMonthlyInterval;
 
 public class WhenNextOccurenceIsStartOfMonth
 {

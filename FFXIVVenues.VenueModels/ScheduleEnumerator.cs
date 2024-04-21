@@ -27,8 +27,12 @@ public class ScheduleEnumerator : IEnumerator<Opening>
     {
         if (this._schedule.Interval.IntervalType == IntervalType.EveryXWeeks)
             return this.MoveNextByXWeeks();
-        if (this._schedule.Interval.IntervalType == IntervalType.EveryXthDayOfTheMonth)
+        if (this._schedule.Interval.IntervalType == IntervalType.EveryXthDayOfTheMonth
+            && this._schedule.Interval.IntervalArgument > 0)
             return this.MoveNextByXthDayOfMonth();
+        if (this._schedule.Interval.IntervalType == IntervalType.EveryXthDayOfTheMonth
+            && this._schedule.Interval.IntervalArgument < 0)
+            return this.MoveNextByXthDayOfMonthFromEnd();
         return false;
     }
     
@@ -81,7 +85,7 @@ public class ScheduleEnumerator : IEnumerator<Opening>
                 .RollToDay(this._schedule.Day)
                 .AddDays(7 * (this._schedule.Interval.IntervalArgument - 1))
                 .SetOffset(_timeZone);
-            return true; 
+            return true;
         }
         
         var end = this._schedule.End ?? new Time
@@ -93,7 +97,9 @@ public class ScheduleEnumerator : IEnumerator<Opening>
         
         var basis = this._from;
         var offset = this._timeZone.GetUtcOffset(basis);
-
+        if (basis.Offset != offset)
+            basis = basis.ToOffset(offset);
+        
         var initialStart = new DateTimeOffset(basis.Year, basis.Month, 1,
             this._schedule.Start.Hour, this._schedule.Start.Minute, 0, offset); 
         var initialEnd = new DateTimeOffset(basis.Year, basis.Month, 1,
@@ -109,6 +115,53 @@ public class ScheduleEnumerator : IEnumerator<Opening>
         if (this.Current!.End < basis)
             return this.MoveNextByXthDayOfMonth();
         
+        return true;
+    }
+
+    private bool MoveNextByXthDayOfMonthFromEnd()
+    {
+        var intervalArgument = Math.Abs(this._schedule.Interval.IntervalArgument);
+        if (this.Current != null)
+        {
+            // Logic to change current day might change depending on how you implement .AddDaysFromEnd
+            this.Current = this.Current
+                .AddMonths(1)
+                .MaxDay()
+                .RollBackToDay(this._schedule.Day)
+                .RemoveDays(7 * (intervalArgument - 1))
+                .SetOffset(_timeZone);
+            return true;
+        }
+
+        var end = this._schedule.End ?? new Time
+        {
+            Hour = (ushort)((this._schedule.Start.Hour + 3) % 24),
+            Minute = this._schedule.Start.Minute,
+            TimeZone = this._schedule.Start.TimeZone
+        };
+
+        var basis = this._from;
+        var offset = this._timeZone.GetUtcOffset(basis);
+
+        // Logic to find the initial start and end might change depending on 
+        // how you implement .RollToDayFromEnd and .AddDaysFromEnd
+        var initialStart = new DateTimeOffset(basis.Year, basis.Month,
+            DateTime.DaysInMonth(basis.Year, basis.Month),
+            this._schedule.Start.Hour, this._schedule.Start.Minute, 0, offset);
+        var initialEnd = new DateTimeOffset(basis.Year, basis.Month,
+            DateTime.DaysInMonth(basis.Year, basis.Month),
+            end.Hour, end.Minute, 0, offset);
+        if (initialStart > initialEnd)
+            initialEnd = initialEnd.AddDays(1);
+
+        this.Current = new Opening(initialStart, initialEnd)
+            .RollBackToDay(this._schedule.Day)
+            .RemoveDays(7 * (intervalArgument - 1))
+            .SetOffset(_timeZone);
+
+        if (this.Current!.End < basis)
+            return this.MoveNextByXthDayOfMonthFromEnd();
+
         return true;
     }
     

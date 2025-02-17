@@ -23,7 +23,7 @@ public static class VenueGenerator
             Location = LocationGenerator.GenerateApartment(),
             Website = new Uri("https://example.carrd.co/"),
             Discord = new Uri($"https://discord.gg/{GetRandomAlphanumericString(8)}"),
-            Hiring = random.Next(2) == 1,
+            OpenHouse = random.Next(2) == 1,
             Sfw = random.Next(2) == 1,
             Schedule = new List<VenueModels.Schedule> {  },
             ScheduleOverrides = new List<ScheduleOverride> {  },

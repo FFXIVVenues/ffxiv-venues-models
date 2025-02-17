@@ -14,7 +14,7 @@ public class Venue
     public Location Location { get; set; } = new();
     public Uri Website { get; set; }
     public Uri Discord { get; set; }
-    public bool Hiring { get; set; }
+    public bool OpenHouse { get; set; }
     public bool Sfw { get; set; }
     public List<Schedule> Schedule { get; set; } = new();
     public List<ScheduleOverride> ScheduleOverrides { get; set; } = new();
